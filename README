@@ -1,0 +1,4 @@
+This file is a work in progress.
+
+This project requires the TeamSpeak 3 Java API (https://github.com/TheHolyWaffle/TeamSpeak-3-Java-API).
+Maven will expect to find the correct version of the API in the 'lib' folder in the root of the source. Make sure to drop it there if you want to compile this project.

@@ -25,6 +25,13 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>com.github.theholywaffle</groupId>
+            <artifactId>teamspeak3</artifactId>
+            <version>r4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/teamspeak-3-api-r4.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.2.5-R1.0</version>
