@@ -28,11 +28,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitTS3 extends JavaPlugin implements Listener {
     public void onDisable() {
-        // TODO: Place any custom disable code here.
+        System.out.println(this + " is now disabled.");
     }
 
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
+        System.out.println(this + " is now enabled.");
     }
 
     @EventHandler

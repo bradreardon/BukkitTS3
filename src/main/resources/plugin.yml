@@ -7,4 +7,4 @@ generator: http://dinnerbone.com/minecraft/tools/pluginator/
 main: me.pixeleater.plugins.bukkitts3.BukkitTS3
 name: BukkitTS3
 startup: postworld
-version: '1.0'
+version: '0.1'
