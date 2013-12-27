@@ -1,0 +1,10 @@
+author: PixelEater
+database: true
+description: Acts as a bridge between a Bukkit server and TeamSpeak 3. Hooks into
+  other plugins such as Factions (to create channels for each faction) and chat plugins
+  to customize a server's individual experience.
+generator: http://dinnerbone.com/minecraft/tools/pluginator/
+main: me.pixeleater.plugins.bukkitts3.BukkitTS3
+name: BukkitTS3
+startup: postworld
+version: '1.0'
