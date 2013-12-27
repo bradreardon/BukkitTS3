@@ -21,19 +21,36 @@ package me.pixeleater.plugins.bukkitts3;
  *
  * @author Brad Reardon <brad.jay.reardon@gmail.com>
  */
+import com.github.theholywaffle.teamspeak3.TS3Api;
+import com.github.theholywaffle.teamspeak3.TS3Query;
+import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
+import java.util.logging.Level;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class BukkitTS3 extends JavaPlugin implements Listener {
+    
+    private static BukkitTS3 instance;
+    private static TS3Api connTS3;
+    
     public void onDisable() {
-        System.out.println(this + " is now disabled.");
+        getLogger().info(this + " is now disabled.");
     }
 
     public void onEnable() {
+        instance = this;
+        this.saveDefaultConfig();
+        
         getServer().getPluginManager().registerEvents(this, this);
-        System.out.println(this + " is now enabled.");
+        getLogger().info("Establishing connection to TeamSpeak 3 Server.");
+        // TODO: Establish central connection to TS3 server here, and handle disconnects accordingly.
+        connTS3 = new TS3Query(instance.getConfig().getString("ts3.host", "localhost"), TS3Query.DEFAULT_PORT, FloodRate.DEFAULT).debug(Level.ALL).connect().getApi();
+        connTS3.selectVirtualServerByPort(instance.getConfig().getInt("ts3.vs_port", 9987));
+        connTS3.setNickname(instance.getConfig().getString("ts3.nick", "BukkitTS3"));
+        connTS3.sendChannelMessage("Testing");
     }
 
     @EventHandler
