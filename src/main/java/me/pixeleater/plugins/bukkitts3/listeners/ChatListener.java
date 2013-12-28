@@ -39,6 +39,6 @@ public class ChatListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(PlayerChatEvent event) {
         if(plugin.getConfig().getBoolean("messages.chat"))
-            plugin.getTS3Api().sendChannelMessage("<" + event.getPlayer().getName() + "> " + event.getMessage());
+            plugin.getTS3Api().sendChannelMessage("<" + event.getPlayer().getDisplayName() + "> " + event.getMessage());
     }
 }
