@@ -1,5 +1,6 @@
 author: PixelEater
 database: true
+softdepend: [Factions]
 description: Acts as a bridge between a Bukkit server and TeamSpeak 3. Hooks into
   other plugins such as Factions (to create channels for each faction) and chat plugins
   to customize a server's individual experience.
