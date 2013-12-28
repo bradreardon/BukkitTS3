@@ -8,3 +8,9 @@ The following libraries/plugins are required, with artifact paths given:
 com.github.theholywaffle:teamspeak - TeamSpeak 3 Java API r4, (https://github.com/TheHolyWaffle/TeamSpeak-3-Java-API/releases/tag/4)
 com.massivecraft:mcore - MCore 7.0.1, (http://dev.bukkit.org/bukkit-plugins/mcore/)
 com.massivecraft:factions - Factions 2.3.0, (http://dev.bukkit.org/bukkit-plugins/factions/)
+
+TO DO
+Add player/client verification to link a player to a client ID, perhaps via a certain command in TeamSpeak.
+Assign channel admin permissions based on player faction position.
+Assign server admin permissions based on player rank (permission node).
+Add option for chat synchronization between TeamSpeak and Minecraft.

@@ -19,6 +19,7 @@ package me.pixeleater.plugins.bukkitts3.listeners;
 
 import com.massivecraft.factions.event.FactionsEventCreate;
 import com.massivecraft.factions.event.FactionsEventDisband;
+import com.massivecraft.factions.event.FactionsEventNameChange;
 import me.pixeleater.plugins.bukkitts3.BukkitTS3;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -44,6 +45,11 @@ public class FactionsListener implements Listener {
     
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionDisband(FactionsEventDisband event) {
+        
+    }
+    
+    @EventHandler(priority=EventPriority.MONITOR)
+    public void onFactionRename(FactionsEventNameChange event) {
         
     }
     

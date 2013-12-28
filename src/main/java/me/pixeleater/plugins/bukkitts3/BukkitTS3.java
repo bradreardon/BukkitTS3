@@ -53,6 +53,8 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
+        this.getConfig().options().copyDefaults(true);
+                
         chatListener = new ChatListener(this);
         playerListener = new PlayerListener(this);
         
