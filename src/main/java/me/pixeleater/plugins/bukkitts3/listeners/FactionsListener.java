@@ -51,6 +51,7 @@ public class FactionsListener implements Listener {
         HashMap<ChannelProperty, String> options = new HashMap();
         int pid = plugin.getTS3Api().getChannelByName(plugin.getConfig().getString("plugins.factions.parent_channel")).getId();
         options.put(ChannelProperty.PID, Integer.toString(pid)); // FIXME: Find parent channel attribute, this obviously isn't working
+        options.put(ChannelProperty.CHANNEL_FLAG_PERMANENT, "1");
         
         FactionChannelRelation fcr = new FactionChannelRelation();
         fcr.setFactionId(event.getFactionId());
