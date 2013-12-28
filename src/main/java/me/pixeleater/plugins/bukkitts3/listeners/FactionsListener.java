@@ -83,6 +83,7 @@ public class FactionsListener implements Listener {
         }
     }
     
+    @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionDescription(FactionsEventDescriptionChange event) {
         HashMap<ChannelProperty, String> options = new HashMap();
         options.put(ChannelProperty.CHANNEL_DESCRIPTION, event.getNewDescription());
