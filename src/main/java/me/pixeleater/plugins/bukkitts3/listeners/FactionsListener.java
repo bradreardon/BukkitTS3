@@ -49,7 +49,7 @@ public class FactionsListener implements Listener {
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionCreation(FactionsEventCreate event) {
         HashMap<ChannelProperty, String> options = new HashMap();
-        int pid = plugin.getTS3Api().getChannelByName(plugin.getConfig().getString("ts3.parent_channel")).getId();
+        int pid = plugin.getTS3Api().getChannelByName(plugin.getConfig().getString("plugins.factions.parent_channel")).getId();
         options.put(ChannelProperty.PID, Integer.toString(pid)); // FIXME: Find parent channel attribute, this obviously isn't working
         
         FactionChannelRelation fcr = new FactionChannelRelation();

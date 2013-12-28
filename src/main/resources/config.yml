@@ -6,10 +6,11 @@ ts3:
     nick: BukkitTS3
     sq_user: serveradmin
     sq_pass: passwd
-    parent_channel: Factions
 messages:
     player_join: true
     player_quit: true
     chat: true
 plugins:
-    factions: true
+    factions:
+        enabled: true
+        parent_channel: Factions

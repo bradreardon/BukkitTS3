@@ -66,7 +66,7 @@ public class BukkitTS3 extends JavaPlugin {
         
         fcrTable = new FactionChannelRelationTable(this);
         
-        if (getServer().getPluginManager().isPluginEnabled("Factions") && instance.getConfig().getBoolean("plugins.factions")) {
+        if (getServer().getPluginManager().isPluginEnabled("Factions") && instance.getConfig().getBoolean("plugins.factions.enabled")) {
             factionsListener = new FactionsListener(this);
             getLogger().info("Factions detected, integration enabled.");
         }
