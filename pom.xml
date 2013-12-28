@@ -45,6 +45,20 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>mcore</artifactId>
+            <version>7.0.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>factions</artifactId>
+            <version>2.3.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.theholywaffle</groupId>
             <artifactId>teamspeak3</artifactId>
             <version>r4</version>

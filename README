@@ -1,4 +1,10 @@
 This file is a work in progress.
 
-This project requires the TeamSpeak 3 Java API (https://github.com/TheHolyWaffle/TeamSpeak-3-Java-API).
-Maven will expect to find the correct version of the API in the local Maven repository at the artifact com.github.theholywaffle:teamspeak3.
+DEVELOPERS
+
+This project, in order to compile, requires the following libraries. By default they are expected to be installed into the local Maven repository.
+The following libraries/plugins are required, with artifact paths given:
+
+com.github.theholywaffle:teamspeak - TeamSpeak 3 Java API r4, (https://github.com/TheHolyWaffle/TeamSpeak-3-Java-API/releases/tag/4)
+com.massivecraft:mcore - MCore 7.0.1, (http://dev.bukkit.org/bukkit-plugins/mcore/)
+com.massivecraft:factions - Factions 2.3.0, (http://dev.bukkit.org/bukkit-plugins/factions/)

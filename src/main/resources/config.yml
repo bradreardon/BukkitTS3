@@ -1,7 +1,12 @@
 # default configuration
+debug: false
 ts3:
     host: localhost
     vs_port: 9987
     nick: BukkitTS3
     sq_user: serveradmin
-    sq_pass: 
+    sq_pass: passwd
+messages:
+    player_join: true
+    player_quit: true
+    chat: true
