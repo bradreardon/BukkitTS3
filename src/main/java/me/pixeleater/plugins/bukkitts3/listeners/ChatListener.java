@@ -29,7 +29,7 @@ import org.bukkit.event.player.PlayerChatEvent;
  */
 public class ChatListener implements Listener {
     
-    BukkitTS3 plugin;
+    private final BukkitTS3 plugin;
     
     public ChatListener(BukkitTS3 plugin) {
         this.plugin = plugin;

@@ -31,7 +31,7 @@ import org.bukkit.event.Listener;
  */
 public class FactionsListener implements Listener {
     
-    BukkitTS3 plugin;
+    private final BukkitTS3 plugin;
 
     public FactionsListener(BukkitTS3 plugin) {
         this.plugin = plugin;

@@ -30,7 +30,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
  */
 public class PlayerListener implements Listener {
     
-    BukkitTS3 plugin;
+    private final BukkitTS3 plugin;
 
     public PlayerListener(BukkitTS3 plugin) {
         this.plugin = plugin;
