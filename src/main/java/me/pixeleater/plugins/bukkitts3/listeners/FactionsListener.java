@@ -19,6 +19,7 @@ package me.pixeleater.plugins.bukkitts3.listeners;
 
 import com.github.theholywaffle.teamspeak3.api.ChannelProperty;
 import com.massivecraft.factions.event.FactionsEventCreate;
+import com.massivecraft.factions.event.FactionsEventDescriptionChange;
 import com.massivecraft.factions.event.FactionsEventDisband;
 import com.massivecraft.factions.event.FactionsEventNameChange;
 import java.util.HashMap;
@@ -73,6 +74,18 @@ public class FactionsListener implements Listener {
     public void onFactionRename(FactionsEventNameChange event) {
         HashMap<ChannelProperty, String> options = new HashMap();
         options.put(ChannelProperty.CHANNEL_NAME, event.getNewName());
+        int channel = -1;
+        try {
+            channel = plugin.getFactionChannelRelationTable().getChannel(event.getFaction().getId());
+        } catch (Exception e) {
+        } finally {
+            plugin.getTS3Api().editChannel(channel, options);
+        }
+    }
+    
+    public void onFactionDescription(FactionsEventDescriptionChange event) {
+        HashMap<ChannelProperty, String> options = new HashMap();
+        options.put(ChannelProperty.CHANNEL_DESCRIPTION, event.getNewDescription());
         int channel = -1;
         try {
             channel = plugin.getFactionChannelRelationTable().getChannel(event.getFaction().getId());
