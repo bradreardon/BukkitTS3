@@ -1,0 +1,7 @@
+# default configuration
+ts3:
+    host: localhost
+    vs_port: 9987
+    nick: BukkitTS3
+    sq_user: serveradmin
+    sq_pass: 

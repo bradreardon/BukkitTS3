@@ -48,6 +48,7 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
         getLogger().info("Establishing connection to TeamSpeak 3 Server.");
         // TODO: Establish central connection to TS3 server here, and handle disconnects accordingly.
         connTS3 = new TS3Query(instance.getConfig().getString("ts3.host", "localhost"), TS3Query.DEFAULT_PORT, FloodRate.DEFAULT).debug(Level.ALL).connect().getApi();
+        connTS3.login(instance.getConfig().getString("ts3.sq_user", "serveradmin"), instance.getConfig().getString("ts3.sq_pass"));
         connTS3.selectVirtualServerByPort(instance.getConfig().getInt("ts3.vs_port", 9987));
         connTS3.setNickname(instance.getConfig().getString("ts3.nick", "BukkitTS3"));
         connTS3.sendChannelMessage("Testing");
