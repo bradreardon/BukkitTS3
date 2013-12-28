@@ -33,6 +33,8 @@ import org.bukkit.event.Listener;
 
 // TODO: Send initiating player messages pertaining to what happens here.
 
+// FIXME: What if somebody has the same Faction name as the parent channel? Fix that bug.
+
 /**
  *
  * @author Brad Reardon <brad.jay.reardon@gmail.com>
@@ -49,13 +51,15 @@ public class FactionsListener implements Listener {
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionCreation(FactionsEventCreate event) {
         HashMap<ChannelProperty, String> options = new HashMap();
-        int pid = plugin.getTS3Api().getChannelByName(plugin.getConfig().getString("plugins.factions.parent_channel")).getId();
-        options.put(ChannelProperty.PID, Integer.toString(pid)); // FIXME: Find parent channel attribute, this obviously isn't working
+        int cpid = plugin.getTS3Api().getChannelByName(plugin.getConfig().getString("plugins.factions.parent_channel")).getId();
         options.put(ChannelProperty.CHANNEL_FLAG_PERMANENT, "1");
+        options.put(ChannelProperty.CPID, Integer.toString(cpid));
+        
+        int cid = plugin.getTS3Api().createChannel(event.getFactionName(), options);
         
         FactionChannelRelation fcr = new FactionChannelRelation();
         fcr.setFactionId(event.getFactionId());
-        fcr.setChannelId(plugin.getTS3Api().createChannel(event.getFactionName(), options));
+        fcr.setChannelId(cid);
         plugin.getFactionChannelRelationTable().save(fcr);
     }
     
