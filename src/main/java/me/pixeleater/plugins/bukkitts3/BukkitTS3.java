@@ -25,13 +25,15 @@ import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
 import java.util.logging.Level;
+import javax.persistence.PersistenceException;
+import me.pixeleater.plugins.bukkitts3.database.FactionChannelRelation;
+import me.pixeleater.plugins.bukkitts3.database.FactionChannelRelationTable;
 import me.pixeleater.plugins.bukkitts3.listeners.ChatListener;
 import me.pixeleater.plugins.bukkitts3.listeners.FactionsListener;
 import me.pixeleater.plugins.bukkitts3.listeners.PlayerListener;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BukkitTS3 extends JavaPlugin implements Listener {
+public class BukkitTS3 extends JavaPlugin {
     
     private static BukkitTS3 instance;
     private static TS3Api connTS3;
@@ -39,6 +41,8 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
     private static ChatListener chatListener;
     private static PlayerListener playerListener;
     private static FactionsListener factionsListener;
+    
+    FactionChannelRelationTable fcrTable;
     
     
     @Override
@@ -54,9 +58,12 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
         instance = this;
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
-                
+        initDB();
+        
         chatListener = new ChatListener(this);
         playerListener = new PlayerListener(this);
+        
+        fcrTable = new FactionChannelRelationTable(this);
         
         if (getServer().getPluginManager().isPluginEnabled("Factions") && instance.getConfig().getBoolean("plugins.factions")) {
             factionsListener = new FactionsListener(this);
@@ -81,6 +88,15 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
         }
         
         // FIXME: What happens if the server disconnects? Handle it.
+    }
+    
+    private void initDB() {
+        try {
+            getDatabase().find(FactionChannelRelation.class).findRowCount();
+        } catch(PersistenceException ex) {
+            getLogger().log(Level.INFO, "Initializing database tables.");
+            installDDL();
+        }
     }
     
     public TS3Api getTS3Api() {
