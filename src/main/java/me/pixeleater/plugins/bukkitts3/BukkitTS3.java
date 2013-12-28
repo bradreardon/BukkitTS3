@@ -26,6 +26,7 @@ import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
 import java.util.logging.Level;
 import me.pixeleater.plugins.bukkitts3.listeners.ChatListener;
+import me.pixeleater.plugins.bukkitts3.listeners.FactionsListener;
 import me.pixeleater.plugins.bukkitts3.listeners.PlayerListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,21 +36,30 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
     private static BukkitTS3 instance;
     private static TS3Api connTS3;
     
+    private static ChatListener chatListener;
+    private static PlayerListener playerListener;
+    private static FactionsListener factionsListener;
+    
+    
     @Override
     public void onDisable() {
         getLogger().info("Closing TS3 connection.");
         connTS3.quit();
         connTS3 = null;
-        getLogger().info(this + " is now disabled.");
+        getLogger().log(Level.INFO, "{0} is now disabled.", this);
     }
 
     @Override
     public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
+        chatListener = new ChatListener(this);
+        playerListener = new PlayerListener(this);
         
-        new ChatListener(this);
-        new PlayerListener(this);
+        if (getServer().getPluginManager().isPluginEnabled("Factions") && instance.getConfig().getBoolean("plugins.factions")) {
+            factionsListener = new FactionsListener(this);
+            getLogger().info("Factions detected, integration enabled.");
+        }
         
         getLogger().info("Establishing connection to TS3 Server.");
         
@@ -71,8 +81,8 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
         // FIXME: What happens if the server disconnects? Handle it.
     }
     
-    public static TS3Api getTS3Api() {
-        return instance.connTS3;
+    public TS3Api getTS3Api() {
+        return connTS3;
     }
 }
 
