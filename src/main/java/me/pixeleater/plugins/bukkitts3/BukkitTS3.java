@@ -37,6 +37,9 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
     private static TS3Api connTS3;
     
     public void onDisable() {
+        getLogger().info("Closing TS3 connection.");
+        connTS3.quit();
+        connTS3 = null;
         getLogger().info(this + " is now disabled.");
     }
 
@@ -45,7 +48,7 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
         this.saveDefaultConfig();
         
         getServer().getPluginManager().registerEvents(this, this);
-        getLogger().info("Establishing connection to TeamSpeak 3 Server.");
+        getLogger().info("Establishing connection to TS3 Server.");
         // TODO: Establish central connection to TS3 server here, and handle disconnects accordingly.
         connTS3 = new TS3Query(instance.getConfig().getString("ts3.host", "localhost"), TS3Query.DEFAULT_PORT, FloodRate.DEFAULT).debug(Level.ALL).connect().getApi();
         connTS3.login(instance.getConfig().getString("ts3.sq_user", "serveradmin"), instance.getConfig().getString("ts3.sq_pass"));

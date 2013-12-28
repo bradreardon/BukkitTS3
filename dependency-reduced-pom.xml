@@ -25,15 +25,11 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <minimizeJar>true</minimizeJar>
-              <filters>
-                <filter>
-                  <artifact>com.github.theholywaffle:teamspeak3</artifact>
-                  <includes>
-                    <include>**</include>
-                  </includes>
-                </filter>
-              </filters>
+              <artifactSet>
+                <includes>
+                  <include>com.github.theholywaffle:teamspeak3</include>
+                </includes>
+              </artifactSet>
             </configuration>
           </execution>
         </executions>
@@ -48,11 +44,10 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>com.github.theholywaffle</groupId>
-      <artifactId>teamspeak3</artifactId>
-      <version>r4</version>
-      <scope>system</scope>
-      <systemPath>/Volumes/Data/Development/Bukkit/BukkitTS3/lib/teamspeak-3-api-r4.jar</systemPath>
+      <groupId>org.bukkit</groupId>
+      <artifactId>bukkit</artifactId>
+      <version>1.2.5-R1.0</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.avaje</groupId>
