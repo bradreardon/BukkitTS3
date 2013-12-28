@@ -25,19 +25,17 @@ import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
 import java.util.logging.Level;
-import org.bukkit.event.EventHandler;
+import me.pixeleater.plugins.bukkitts3.listeners.ChatListener;
+import me.pixeleater.plugins.bukkitts3.listeners.PlayerListener;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 public class BukkitTS3 extends JavaPlugin implements Listener {
     
     private static BukkitTS3 instance;
     private static TS3Api connTS3;
     
+    @Override
     public void onDisable() {
         getLogger().info("Closing TS3 connection.");
         connTS3.quit();
@@ -45,44 +43,36 @@ public class BukkitTS3 extends JavaPlugin implements Listener {
         getLogger().info(this + " is now disabled.");
     }
 
+    @Override
     public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
         
-        getServer().getPluginManager().registerEvents(this, this);
+        new ChatListener(this);
+        new PlayerListener(this);
+        
         getLogger().info("Establishing connection to TS3 Server.");
-        // TODO: Establish central connection to TS3 server here, and handle disconnects accordingly.
+        
         try {
             if (instance.getConfig().getBoolean("debug", false))
                 connTS3 = new TS3Query(instance.getConfig().getString("ts3.host", "localhost"), TS3Query.DEFAULT_PORT, FloodRate.DEFAULT).debug(Level.ALL).connect().getApi();
             else
                 connTS3 = new TS3Query(instance.getConfig().getString("ts3.host", "localhost"), TS3Query.DEFAULT_PORT, FloodRate.DEFAULT).connect().getApi();
-            connTS3.login(instance.getConfig().getString("ts3.sq_user", "serveradmin"), instance.getConfig().getString("ts3.sq_pass"));
-            connTS3.selectVirtualServerByPort(instance.getConfig().getInt("ts3.vs_port", 9987));
-            connTS3.setNickname(instance.getConfig().getString("ts3.nick", "BukkitTS3"));
+            
+            getTS3Api().login(instance.getConfig().getString("ts3.sq_user", "serveradmin"), instance.getConfig().getString("ts3.sq_pass"));
+            getTS3Api().selectVirtualServerByPort(instance.getConfig().getInt("ts3.vs_port", 9987));
+            getTS3Api().setNickname(instance.getConfig().getString("ts3.nick", "BukkitTS3"));
         } catch(Exception e) {
             getLogger().severe(e.toString());
         } finally {
             getLogger().info("Connection established to TeamSpeak.");
         }
+        
+        // FIXME: What happens if the server disconnects? Handle it.
     }
     
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        if(instance.getConfig().getBoolean("messages.player_join"))
-            connTS3.sendChannelMessage(event.getPlayer().getName() + " logged in.");
-    }
-    
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        if(instance.getConfig().getBoolean("messages.player_quit"))
-            connTS3.sendChannelMessage(event.getPlayer().getName() + " logged out.");
-    }
-    
-    @EventHandler
-    public void onChat(PlayerChatEvent event) {
-        if(instance.getConfig().getBoolean("messages.chat"))
-            connTS3.sendChannelMessage("<" + event.getPlayer().getName() + "> " + event.getMessage());
+    public static TS3Api getTS3Api() {
+        return instance.connTS3;
     }
 }
 
