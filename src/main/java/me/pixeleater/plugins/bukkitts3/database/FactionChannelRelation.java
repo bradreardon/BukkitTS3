@@ -36,7 +36,7 @@ public class FactionChannelRelation {
     private int id;
     
     @NotNull
-    private int factionId;
+    private String factionId;
     
     @NotNull
     private int channelId;
@@ -49,11 +49,11 @@ public class FactionChannelRelation {
         return this.id;
     }
     
-    public void setFactionId(int id) {
+    public void setFactionId(String id) {
         this.factionId = id;
     }
     
-    public int getFactionId() {
+    public String getFactionId() {
         return this.factionId;
     }
     

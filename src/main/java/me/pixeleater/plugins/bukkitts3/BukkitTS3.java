@@ -24,6 +24,7 @@ package me.pixeleater.plugins.bukkitts3;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.persistence.PersistenceException;
 import me.pixeleater.plugins.bukkitts3.database.FactionChannelRelation;
@@ -97,6 +98,16 @@ public class BukkitTS3 extends JavaPlugin {
             getLogger().log(Level.INFO, "Initializing database tables.");
             installDDL();
         }
+    }
+    
+    public ArrayList<Class<?>> getDatabaseClasses() {
+        ArrayList<Class<?>> dbClasses = new ArrayList();
+        dbClasses.add(FactionChannelRelation.class);
+        return dbClasses;
+    }
+    
+    public FactionChannelRelationTable getFactionChannelRelationTable() {
+        return fcrTable;
     }
     
     public TS3Api getTS3Api() {

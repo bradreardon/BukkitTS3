@@ -14,3 +14,4 @@ Add player/client verification to link a player to a client ID, perhaps via a ce
 Assign channel admin permissions based on player faction position.
 Assign server admin permissions based on player rank (permission node).
 Add option for chat synchronization between TeamSpeak and Minecraft.
+Vault compatibility for chat, if we add any sort of special stuff to chat.

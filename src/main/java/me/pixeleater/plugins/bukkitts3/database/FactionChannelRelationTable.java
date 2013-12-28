@@ -18,7 +18,6 @@
 package me.pixeleater.plugins.bukkitts3.database;
 
 import com.avaje.ebean.Query;
-import com.massivecraft.factions.entity.Faction;
 import me.pixeleater.plugins.bukkitts3.BukkitTS3;
 
 /**
@@ -33,17 +32,15 @@ public class FactionChannelRelationTable {
         this.plugin = plugin;
     }
     
-    public int getFaction(int channelId) {
-        int f;
+    public String getFaction(int channelId) {
+        String f = null;
         Query<FactionChannelRelation> query = plugin.getDatabase().find(FactionChannelRelation.class).where().eq("channelId", channelId).query();
         if (query != null)
             f = query.findUnique().getFactionId();
-        else
-            f = -1;
         return f;
     }
     
-    public int getChannel(int factionId) {
+    public int getChannel(String factionId) {
         int c;
         Query<FactionChannelRelation> query = plugin.getDatabase().find(FactionChannelRelation.class).where().eq("factionId", factionId).query();
         if (query != null)

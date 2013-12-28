@@ -17,13 +17,20 @@
 
 package me.pixeleater.plugins.bukkitts3.listeners;
 
+import com.github.theholywaffle.teamspeak3.api.ChannelProperty;
 import com.massivecraft.factions.event.FactionsEventCreate;
 import com.massivecraft.factions.event.FactionsEventDisband;
 import com.massivecraft.factions.event.FactionsEventNameChange;
+import java.util.HashMap;
 import me.pixeleater.plugins.bukkitts3.BukkitTS3;
+import me.pixeleater.plugins.bukkitts3.database.FactionChannelRelation;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+
+// TODO: Maybe design custom exceptions in case the relationships weren't established right?
+
+// TODO: Send initiating player messages pertaining to what happens here.
 
 /**
  *
@@ -40,17 +47,39 @@ public class FactionsListener implements Listener {
     
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionCreation(FactionsEventCreate event) {
+        HashMap<ChannelProperty, String> options = new HashMap();
+        int pid = plugin.getTS3Api().getChannelByName(plugin.getConfig().getString("ts3.parent_channel")).getId();
+        options.put(ChannelProperty.PID, Integer.toString(pid)); // FIXME: Find parent channel attribute, this obviously isn't working
         
+        FactionChannelRelation fcr = new FactionChannelRelation();
+        fcr.setFactionId(event.getFactionId());
+        fcr.setChannelId(plugin.getTS3Api().createChannel(event.getFactionName(), options));
+        plugin.getFactionChannelRelationTable().save(fcr);
     }
     
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionDisband(FactionsEventDisband event) {
-        
+        int channel = -1;
+        try {
+            channel = plugin.getFactionChannelRelationTable().getChannel(event.getFactionId());
+        } catch (Exception e) {
+             // No need to worry, the relationship was never established in the first place.
+        } finally {
+            plugin.getTS3Api().deleteChannel(channel);
+        }
     }
     
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionRename(FactionsEventNameChange event) {
-        
+        HashMap<ChannelProperty, String> options = new HashMap();
+        options.put(ChannelProperty.CHANNEL_NAME, event.getNewName());
+        int channel = -1;
+        try {
+            channel = plugin.getFactionChannelRelationTable().getChannel(event.getFaction().getId());
+        } catch (Exception e) {
+        } finally {
+            plugin.getTS3Api().editChannel(channel, options);
+        }
     }
     
 }
