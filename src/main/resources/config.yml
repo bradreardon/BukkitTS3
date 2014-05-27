@@ -3,6 +3,7 @@ debug: false
 ts3:
     host: localhost
     vs_port: 9987
+    #default_channel: Lobby
     nick: BukkitTS3
     sq_user: serveradmin
     sq_pass: passwd

@@ -21,9 +21,9 @@ package me.pixeleater.plugins.bukkitts3;
  *
  * @author Brad Reardon <brad.jay.reardon@gmail.com>
  */
-import com.github.theholywaffle.teamspeak3.TS3Api;
-import com.github.theholywaffle.teamspeak3.TS3Query;
-import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
+import com.github.bradreardon.jts3.TS3Api;
+import com.github.bradreardon.jts3.TS3Query;
+import com.github.bradreardon.jts3.TS3Query.FloodRate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.persistence.PersistenceException;
@@ -82,6 +82,9 @@ public class BukkitTS3 extends JavaPlugin {
             getTS3Api().login(instance.getConfig().getString("ts3.sq_user", "serveradmin"), instance.getConfig().getString("ts3.sq_pass"));
             getTS3Api().selectVirtualServerByPort(instance.getConfig().getInt("ts3.vs_port", 9987));
             getTS3Api().setNickname(instance.getConfig().getString("ts3.nick", "BukkitTS3"));
+            String chan = instance.getConfig().getString("ts3.default_channel", "");
+            if (chan.isEmpty())
+                getTS3Api().moveClient(getTS3Api().getChannelByName(chan).getId());
         } catch(Exception e) {
             getLogger().severe(e.toString());
         } finally {

@@ -17,7 +17,7 @@
 
 package me.pixeleater.plugins.bukkitts3.listeners;
 
-import com.github.theholywaffle.teamspeak3.api.ChannelProperty;
+import com.github.bradreardon.jts3.api.ChannelProperty;
 import com.massivecraft.factions.event.FactionsEventCreate;
 import com.massivecraft.factions.event.FactionsEventDescriptionChange;
 import com.massivecraft.factions.event.FactionsEventDisband;
@@ -25,6 +25,7 @@ import com.massivecraft.factions.event.FactionsEventNameChange;
 import java.util.HashMap;
 import me.pixeleater.plugins.bukkitts3.BukkitTS3;
 import me.pixeleater.plugins.bukkitts3.database.FactionChannelRelation;
+import me.pixeleater.plugins.bukkitts3.util.BukkitUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -50,6 +51,8 @@ public class FactionsListener implements Listener {
     
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionCreation(FactionsEventCreate event) {
+        BukkitUtils.sendPluginMessage(event, "Creating TeamSpeak channel for your faction...");
+        
         HashMap<ChannelProperty, String> options = new HashMap();
         int cpid = plugin.getTS3Api().getChannelByName(plugin.getConfig().getString("plugins.factions.parent_channel")).getId();
         options.put(ChannelProperty.CHANNEL_FLAG_PERMANENT, "1");
@@ -61,6 +64,8 @@ public class FactionsListener implements Listener {
         fcr.setFactionId(event.getFactionId());
         fcr.setChannelId(cid);
         plugin.getFactionChannelRelationTable().save(fcr);
+        
+        BukkitUtils.sendPluginMessage(event, "Your faction's channel has been created.");
     }
     
     @EventHandler(priority=EventPriority.MONITOR)
